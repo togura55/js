@@ -1,0 +1,9 @@
+.ResizeHandle {position: absolute; font-size: 0.1px;}
+.ResizeHandle.T {width: 96%; height: 7px; top: -6px; left: 2%; cursor: ns-resize;}
+.ResizeHandle.B {width: 96%; height: 7px; bottom: -6px; left: 2%; cursor: ns-resize;}
+.ResizeHandle.L {width: 7px; height: 96%; top: 2%; left: -6px; cursor: ew-resize;}
+.ResizeHandle.R {width: 7px; height: 96%; top: 2%; right: -6px; cursor: ew-resize;}
+.ResizeHandle.TL {width: 18px; height: 18px; top: -9px; left: -9px; cursor: nwse-resize; z-index: 20;}
+.ResizeHandle.TR {width: 18px; height: 18px; top: -9px; right: -9px; cursor: nesw-resize; z-index: 20;}
+.ResizeHandle.BL {width: 18px; height: 18px; bottom: -9px; left: -9px; cursor: nesw-resize; z-index: 20;}
+.ResizeHandle.BR {width: 18px; height: 18px; bottom: -9px; right: -9px; cursor: nwse-resize; z-index: 20;}

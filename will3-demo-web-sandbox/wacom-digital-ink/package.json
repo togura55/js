@@ -1,0 +1,21 @@
+{
+  "name": "digital-ink",
+  "version": "3.0.0",
+  "description": "WILL - Wacom Ink Layer Language",
+  "main": "wacom-digital-ink-cjs-min.js",
+  "module": "wacom-digital-ink-esm-min.js",
+  "unpkg": "wacom-digital-ink-min.js",
+  "dependencies": {
+    "canvas": "^2.6.1",
+    "clipper-lib": "^6.4.2",
+    "gl": "^4.5.0",
+    "gl-matrix": "^3.3.0",
+    "js-md5": "^0.7.3",
+    "poly2tri": "^1.5.0",
+    "protobufjs": "^6.8.9",
+    "rbush": "^3.0.1",
+    "systeminformation": "^4.23.3"
+  },
+  "author": "Tzvetelin Vassilev",
+  "license": "ISC"
+}

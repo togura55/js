@@ -1,0 +1,13 @@
+{
+  "name": "will3-sdk-for-ink-web-demo",
+  "version": "1.0.0",
+  "description": "WILL 3 - Rendering, Manipulations and Serialization (Universal Ink Model) Demo",
+  "main": "main.js",
+  "dependencies": {
+    "digital-ink": "./wacom-digital-ink",
+    "jquery": "^3.4.1",
+    "jquery-contextmenu": "^2.9.0"
+  },
+  "author": "Tzvetelin Vassilev",
+  "license": "MIT"
+}
