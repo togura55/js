@@ -1,10 +1,10 @@
 let layout = {
-	init: function() {
+	init: function () {
 		dropDown.init();
 
 		$("nav .Tool").addClass("Button");
 
-		$("nav .Tool").on("click", function() {
+		$("nav .Tool").on("click", function () {
 			if (this.classList.contains("Selected")) return;
 
 			$("nav .Tool.Selected").removeClass("Selected");
@@ -13,7 +13,7 @@ let layout = {
 			WILL.setTool(this.id);
 		});
 
-		$("nav .ColorBox input[type=color]").on("change", function() {
+		$("nav .ColorBox input[type=color]").on("change", function () {
 			layout.selectColor(this);
 		});
 	},
@@ -22,7 +22,7 @@ let layout = {
 		$(`nav .Tool#${id}`).trigger("click")
 	},
 
-	selectColor: function(input) {
+	selectColor: function (input) {
 		let color = this.extractColor(input);
 
 		$(".ColorBox .Color").css("background-color", input.value);
@@ -52,7 +52,7 @@ let layout = {
 		let tabContent = node.parentNode.nextElementSibling;
 
 		tabContent.className = node.value;
-		tabContent.style.height = (document.querySelector(".Dialog").offsetHeight - node.parentNode.offsetHeight) +  "px";
+		tabContent.style.height = (document.querySelector(".Dialog").offsetHeight - node.parentNode.offsetHeight) + "px";
 	},
 
 	buildDialogContent(model) {

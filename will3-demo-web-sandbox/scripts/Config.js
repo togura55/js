@@ -627,6 +627,19 @@ let config = {
 				blue: 212,
 				alpha: 1
 			}
+		},
+
+		selectorAll: {
+			brush: BrushPalette.circle,
+			selector: new Selector(Selector.Mode.WHOLE_STROKE),
+
+			statics: {
+				size: 2,
+				red: 0,
+				green: 151,
+				blue: 212,
+				alpha: 1
+			}
 		}
 	},
 

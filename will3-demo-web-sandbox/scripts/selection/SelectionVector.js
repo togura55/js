@@ -25,7 +25,7 @@ class SelectionVector extends Selection {
 
 		let origin;
 		let path;
-
+		
 		if (selector.mode == Selector.Mode.WHOLE_STROKE) {
 			this.type = Selection.Type.RECT;
 			this.strokes = this.dataModel.getStrokes(selection.selected);
@@ -36,12 +36,17 @@ class SelectionVector extends Selection {
 
 			this.canvasTransformer.drawStrokes(this.strokes);
 		}
-		else {
+		
+		else if (selector.mode == Selector.Mode.PARTIAL_STROKE) {
 			this.type = Selection.Type.PATH;
 			this.selection = selection;
 
 			origin = stroke.bounds;
 			path = stroke.points;
+		}
+
+		else{
+			origin = this.canvas;
 		}
 
 		super.open(origin, path, MatTools.makeTranslate(origin.left, origin.top));
