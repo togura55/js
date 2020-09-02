@@ -260,6 +260,11 @@ class InkCanvas extends InkController {
 		this.dataModel.reset();
 	}
 
+	selectAll() {
+		//		let dummy = NULL;
+		this.canvas.ctx.strokeRect(10,10,200,100);  //縦横共10pxの位置から、200px×100pxの矩形輪郭を描く
+	}
+
 	import(input, type) {
 		let reader = new FileReader();
 

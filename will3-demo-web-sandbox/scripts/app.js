@@ -88,5 +88,18 @@ let app = {
 			localStorage.setItem("sample", sample);
 
 		location.reload();
+	},
+
+	// Surround all strokes with a rectangle
+	selectAll(input){
+		let inkModel = this.model.inkModel;		
+		let origin;
+
+		inkModel.strokes.forEach(stroke => {
+			origin = stroke.bounds.union(origin);
+		});
+	
+		let canvas = window.WILL.canvas;
+		canvas.ctx.strokeRect(origin.left, origin.top, origin.width, origin.height); 
 	}
 };

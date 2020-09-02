@@ -629,9 +629,9 @@ let config = {
 			}
 		},
 
-		selectorAll: {
+		selectAll: {
 			brush: BrushPalette.circle,
-			selector: new Selector(Selector.Mode.WHOLE_STROKE),
+	//		selector: new Selector(Selector.Mode.WHOLE_STROKE),
 
 			statics: {
 				size: 2,
