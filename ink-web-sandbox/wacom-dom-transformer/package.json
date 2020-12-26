@@ -1,0 +1,15 @@
+{
+  "name": "dom-transformer",
+  "productName": "DOM Transformer",
+  "version": "1.0.0",
+  "description": "DOM manipulator & content frame",
+  "module": "dom-transformer-min.js",
+  "unpkg": "dom-transformer-min.js",
+  "repository": "https://github.com/wacom/dom-transformer.git",
+  "author": "Wacom Co LTD",
+  "homepage": "https://wacom.com/dom-transformer",
+  "bugs": {
+    "url": "https://github.com/wacom/dom-transformer/issues"
+  },
+  "license": "ISC"
+}
