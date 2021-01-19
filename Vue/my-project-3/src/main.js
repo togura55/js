@@ -3,6 +3,7 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router' // SPA対応
+import store from './store'  // Vuexで追加
 
 Vue.config.productionTip = false
 
@@ -15,6 +16,8 @@ Vue.config.productionTip = false
 // これは、複数のテストで同じvueインスタンスを使用したい場合のテストで頻繁に発生する。
 new Vue({
   router, // SPA対応
+
+  store,  // Vuexで追加
 
   // templateレンダリングの代替...黙って記述
   render: h => h(App)
