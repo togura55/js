@@ -30,7 +30,12 @@ class Selection {
 
 		this.frame.querySelector(".drag-handle").style.display = "none";
 
+		// added for #180
+		let domRect = new DOMRect(100, 100, 
+			this.canvasBridge.canvas.bounds.width, 
+			this.canvasBridge.canvas.bounds.height);
 		this.transformer = TransformEvent.register(this.frame, {
+			rstrictiveArea: domRect,	// added for #180
 			translate: true,
 			rotate: true,
 			scale: true,
