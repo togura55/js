@@ -31,9 +31,10 @@ class Selection {
 		this.frame.querySelector(".drag-handle").style.display = "none";
 
 		// added for #180
-		let domRect = new DOMRect(100, 100, 
-			this.canvasBridge.canvas.bounds.width, 
-			this.canvasBridge.canvas.bounds.height);
+		let offset = 200;
+		let domRect = new DOMRect(offset, offset, 
+			this.canvasTransformer.canvas.width - offset * 2, 
+			this.canvasTransformer.canvas.height - offset * 2);
 		this.transformer = TransformEvent.register(this.frame, {
 			rstrictiveArea: domRect,	// added for #180
 			translate: true,

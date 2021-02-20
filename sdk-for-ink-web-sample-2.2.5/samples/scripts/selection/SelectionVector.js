@@ -13,6 +13,7 @@ class SelectionVector extends Selection {
 		this.canvasSelector = this.canvasBridge.canvas.surface.className;
 		this.selectionSelector = ".selection-vector";
 		this.importSelector = ".import-file";
+
 	}
 
 	open(stroke, selector) {
