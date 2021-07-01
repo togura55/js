@@ -24,6 +24,12 @@ class InkCanvasVector extends InkCanvas {
 		this.selection.connect();
 
 		Object.defineProperty(this, "transform", {get: () => this.lens.transform, set: value => (this.lens.transform = value), enumerable: true});
+	
+		// added for #212
+		this.canvas.surface.addEventListener("touchmove", function(e) {
+			e.preventDefault();
+		});
+
 	}
 
 	streamUpdatedArea(data, updatedArea, complete) {

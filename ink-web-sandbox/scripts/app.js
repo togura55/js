@@ -60,6 +60,11 @@ let app = {
 
 		InputListener.open(inkCanvas);
 		this.enableTouch = true;
+
+		// added for #212
+		// window.addEventListener("touchmove", function(e) {
+		// 	e.preventDefault();
+		// });
 	},
 
 	redirect(sample) {

@@ -10,10 +10,10 @@ class Lens {
 		let matrix = new Matrix();
 
 		Object.defineProperty(this, "transform", {
-			get: function() {
+			get: function () {
 				return matrix;
 			},
-			set: function(value) {
+			set: function (value) {
 				matrix = value;
 
 				refresh(value);
@@ -31,14 +31,14 @@ class Lens {
 		this.onZoom = this.zoom.bind(this);
 
 		this.onPanStart = function onPanStart(e) {
-			if (e.buttons == 2) lastPoint = {x: e.offsetX, y: e.offsetY};
+			if (e.buttons == 2) lastPoint = { x: e.offsetX, y: e.offsetY };
 		}.bind(this);
 
 		this.onPan = function onPan(e) {
 			if (e.buttons != 2) return;
 
-			let delta = {x: e.offsetX - lastPoint.x, y: e.offsetY - lastPoint.y};
-			lastPoint = {x: e.offsetX, y: e.offsetY};
+			let delta = { x: e.offsetX - lastPoint.x, y: e.offsetY - lastPoint.y };
+			lastPoint = { x: e.offsetX, y: e.offsetY };
 
 			this.pan(delta);
 		}.bind(this);
@@ -55,13 +55,15 @@ class Lens {
 		}.bind(this);
 
 		this.onPinch = function onPinch(e) {
+			// Temporary workaround: 21AP_HWI-5, #WILL3-214
 			this.zoom(e.detail.pin, e.detail.scale);
 			this.pan(e.detail.translation);
 		}.bind(this);
 	}
 
 	enable() {
-		this.canvas.surface.addEventListener("wheel", this.onZoom, {passive: true});
+		// Temporary workaround: 21AP_HWI-5, #WILL3-214
+		this.canvas.surface.addEventListener("wheel", this.onZoom, { passive: true });
 
 		this.canvas.surface.addEventListener("mousedown", this.onPanStart);
 		this.canvas.surface.addEventListener("mousemove", this.onPan);
@@ -83,7 +85,7 @@ class Lens {
 	}
 
 	zoom(e, scaleFactor) {
-		let pos = scaleFactor ? e : {x: e.offsetX, y: e.offsetY};
+		let pos = scaleFactor ? e : { x: e.offsetX, y: e.offsetY };
 		let factor = scaleFactor ? scaleFactor : (e.deltaY > 0) ? 0.97 : 1.03;
 
 		if (this.transform.a * factor < MIN_SCALE_FACTOR)
@@ -109,7 +111,7 @@ class Lens {
 		}
 
 		if (scale.a != sx || scale.d != sy)
-			scale = Matrix.fromMatrix({a: sx, b: scale.b, c: scale.c, d: sy, tx: scale.tx, ty: scale.ty});
+			scale = Matrix.fromMatrix({ a: sx, b: scale.b, c: scale.c, d: sy, tx: scale.tx, ty: scale.ty });
 
 		this.normalizeTransform(scale);
 	}
@@ -146,7 +148,7 @@ class Lens {
 		}
 
 		if (matrix.tx != tx || matrix.ty != ty)
-			this.transform = Matrix.fromMatrix({a: matrix.a, b: matrix.b, c: matrix.c, d: matrix.d, tx, ty});
+			this.transform = Matrix.fromMatrix({ a: matrix.a, b: matrix.b, c: matrix.c, d: matrix.d, tx, ty });
 		else
 			this.transform = matrix;
 	}

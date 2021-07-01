@@ -59,6 +59,8 @@ let app = {
 		layout.selectTool(inkCanvas.toolID);
 
 		InputListener.open(inkCanvas);
+
+
 	},
 
 	redirect(sample) {
