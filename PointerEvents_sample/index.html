@@ -1,11 +1,11 @@
 <!-- https://qiita.com/warotarock/items/8ce5b7e4aa4b84c70a44 -->
 <!DOCTYPE html>
 <html lang="ja">
+
 <head>
     <meta charset="utf-8" />
     <title>pointerイベントのサンプル</title>
     <style>
-
         .container {
             position: relative;
         }
@@ -35,7 +35,6 @@
             border: solid;
             touch-action: none;
         }
-
     </style>
     <script>
 
@@ -49,76 +48,53 @@
             const context = mainCanvas.getContext('2d')
 
             function log(tag, e) {
-
                 console.log(tag, e.pointerId, e.offsetX, e.offsetY, e.buttons, e.pressure)
             }
 
             function drawPointer(e) {
-
+                const x = e.offsetX
+                const y = e.offsetY
+                const radius = 5.0 + e.pressure * 10.0
+                const red = e.pressure * 255
+                context.beginPath()
+                context.moveTo((x + radius), y)
+                context.arc(x, y, radius, 0, Math.PI * 2)
+                context.closePath()
+                context.fill()
                 if (e.buttons != 0 || e.pressure > 0.0) {
-
-                    const x = e.offsetX
-                    const y = e.offsetY
-                    const radius = 5.0 + e.pressure * 10.0
-                    const red = e.pressure * 255
                     context.fillStyle = `rgba(${red}, 0, 255, 1.0)`
-                    context.beginPath()
-                    context.moveTo((x + radius) , y)
-                    context.arc(x , y , radius , 0 , Math.PI * 2)
-                    context.closePath()
-                    context.fill()
                 }
-                else if (e.buttons == 0 && e.pressure == 0.0)
-                {
-                    const x = e.offsetX
-                    const y = e.offsetY
-                    const radius = 5.0 + e.pressure * 10.0
-                    const red = e.pressure * 255
+                // in case of drawing the Pen Hover
+                else if (e.buttons == 0 && e.pressure == 0.0) {
                     context.fillStyle = `rgba(200, 200, 200, 1.0)`
-                    context.beginPath()
-                    context.moveTo((x + radius) , y)
-                    context.arc(x , y , radius , 0 , Math.PI * 2)
-                    context.closePath()
-                    context.fill()
                 }
-
             }
 
             mainCanvas.addEventListener('pointerdown', (e) => {
-
                 log('pointerdown', e)
-
                 drawPointer(e)
-
                 e.preventDefault()
             })
 
             mainCanvas.addEventListener('pointermove', (e) => {
-
                 log('pointermove', e)
-
                 drawPointer(e)
-
                 e.preventDefault()
             })
 
             mainCanvas.addEventListener('pointerup', (e) => {
-
                 log('pointerup', e)
-
                 e.preventDefault()
             })
         })
 
     </script>
 </head>
+
 <body>
     <div class="container">
         <canvas id="mainCanvas"></canvas>
-        <!-- <div class="pointer-transparent">
-            ここはポインターイベントが透過します
-            <div class="pointer-target"><div>ここは透過<br>しません</div></div>
-        </div> -->
     </div>
 </body>
+
 </html>
