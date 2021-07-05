@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "..\\joy-con-webhid-main"
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "sample"
+	}
+}
