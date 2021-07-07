@@ -2,22 +2,47 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <!-- active below statement causes an error of "Must be handling a user gesture to show a permission request."-->
-    <!-- <meta http-equiv="X-UA-Compatible" content="IE=edge"> -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WebHID Check</title>
+  <meta charset="UTF-8">
+  <!-- active below statement causes an error of "Must be handling a user gesture to show a permission request."-->
+  <!-- <meta http-equiv="X-UA-Compatible" content="IE=edge"> -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WebHID Check</title>
 
-    <script type="module", src="index.js"></script>
-  </head>
+  <script type="module" , src="index.js"></script>
+</head>
 
 <body>
 
-    <h1>WebHID compatibility test</h1>
+  <h1>WebHID compatibility test</h1>
+  <div>
+    <button id="check-button" type="button">Check</button>
+  </div>
 
-      <button id="check-button" type="button">Check</button>
+  <div>
+    <input type="checkbox" id="isFilterdCheckbox" name="filteredCheckbox" checked>
+    <label for="Filtered Devices">Filtered Devices</label>
+  </div>
+  <div>
+    <input type="text" id="openFileTextBox">
+    <button type="button" id="openFile">File...</button>
+  </div>
 
-    <div id="resultDevices"></div>
+  <div type="text" id="console_log"></div>
+
+  <div id="resultDevices"></div>
+
+  <!-- <div>
+    <form>
+      <select size="10" name="outputList">
+        <option value="nikujyaga">肉じゃが</option>
+        <option value="sukiyaki">すき焼き</option>
+        <option value="kare">カレーライス</option>
+        <option value="guratan">グラタン</option>
+        <option value="hanbaku">ハンバーグ</option>
+        <option value="kanitama">かに玉</option>
+      </select>
+    </form>
+  </div> -->
 
 </body>
 

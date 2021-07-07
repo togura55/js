@@ -2,6 +2,8 @@
 //  HID device control functions
 //
 
+let isFiltered = document.getElementById('isFilterdCheckbox');
+
 
 const filters = [
     {
@@ -39,7 +41,12 @@ const parseDevice = async () => {
     try {
         // Prompt user to select a Hid device on a dialog.
         // Must be handling a user gesture. Otherwise, generate an error by WebHID
-        const [device] = await navigator.hid.requestDevice({ filters });
+        if (isFiltered.checked) {
+            const [device] = await navigator.hid.requestDevice({ filters });
+        } else {
+            const [device] = await navigator.hid.requestDevice({ filters: [] });
+        }
+
         if (!device) {
             console.log(`No selected HID devices are found.`);
             return;
@@ -78,6 +85,7 @@ const parseDevice = async () => {
         connectedDevices.set(device.productId, await connectDevice(device));
     } catch (error) {
         console.error(error.name, error.message);
+        console.log (error.name + ': ' + error.message);
     }
 };
 
