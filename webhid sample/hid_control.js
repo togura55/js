@@ -5,12 +5,7 @@
 let isFiltered = document.getElementById('isFilterdCheckbox');
 
 
-const filters = [
-    {
-        vendorId: 0x056a, // Wacom Co., Ltd
-        productId: 0x00a8 // STU-540
-    },
-
+let filters = [
     {
         vendorId: 0x056a, // Wacom Co., Ltd
         productId: 0x00a5 // STU-530
@@ -35,27 +30,31 @@ navigator.hid.addEventListener("disconnect", event => {
 });
 
 //
+// setFilters
+//
+const setFilters = function (obj) {
+    filters = obj;
+};
+
+//
 // Parse HID devices
 //
 const parseDevice = async () => {
     try {
+        let device;
         // Prompt user to select a Hid device on a dialog.
         // Must be handling a user gesture. Otherwise, generate an error by WebHID
         if (isFiltered.checked) {
-            const [device] = await navigator.hid.requestDevice({ filters });
+            [device] = await navigator.hid.requestDevice({ filters });
         } else {
-            const [device] = await navigator.hid.requestDevice({ filters: [] });
+            [device] = await navigator.hid.requestDevice({ filters: [] });
         }
 
         if (!device) {
             console.log(`No selected HID devices are found.`);
             return;
         }
-
-        let outputStrings = `User selected ` + device.productName + ` is accessible via WebHID.`;
-        console.log(outputStrings);
-        // var result = document.getElementById("resultDevices");
-        // result.innerHTML = outputStrings;
+        console.log(`User selected "` + device.productName + `" is accessible via WebHID.`);
 
         // A HIDDevice object contains USB vendor and product identifiers for device identification. 
         // Its collections attribute is initialized with a hierarchical description of the device's report formats.
@@ -83,9 +82,10 @@ const parseDevice = async () => {
 
         // go connection
         connectedDevices.set(device.productId, await connectDevice(device));
+
+        //        connectedDevices.delete(device.productId);
     } catch (error) {
         console.error(error.name, error.message);
-        console.log (error.name + ': ' + error.message);
     }
 };
 
@@ -103,6 +103,7 @@ const connectDevice = async (device) => {
     await hidDevice.open();
     // await hidDevice.enableStandardFullMode();
     // await hidDevice.enableIMUMode();
+    await hidDevice.close();
     return hidDevice;
 };
 
@@ -132,9 +133,24 @@ class StuDeviceCore extends EventTarget {
     async open() {
         if (!this.device.opened) {
             await this.device.open();
+            console.log(`A device is open.`);
         }
         // Set the hearing input from the device
         this.device.addEventListener('inputreport', this._onInputReport.bind(this));
+    };
+
+    // 
+    //  Close the device and discard the listener from the device
+    // 
+    //  @memberof StuDeviceCore
+    // 
+    async close() {
+        if (this.device.opened) {
+            await this.device.close();
+            console.log(`A device is closed.`);
+        }
+        // Discard the hearing input from the device
+        this.device.removeEventListener('inputreport', this._onInputReport.bind(this));
     };
 
     // 
@@ -287,4 +303,4 @@ class StuDevice extends StuDeviceCore {
     }
 };
 
-export { parseDevice, connectedDevices };
+export { setFilters, parseDevice, connectedDevices };

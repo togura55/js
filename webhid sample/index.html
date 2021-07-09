@@ -8,6 +8,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>WebHID Check</title>
 
+  <link rel="stylesheet" href="style.css" />
   <script type="module" , src="index.js"></script>
 </head>
 
@@ -23,11 +24,13 @@
     <label for="Filtered Devices">Filtered Devices</label>
   </div>
   <div>
-    <input type="text" disabled id="openFileTextBox">
-    <button type="button" disabled id="openFile">File...</button>
+    <input type="file" id="openFile">
+    <!-- <button type="button" disabled id="openFile">File...</button> -->
   </div>
 
-  <div type="text" id="console_log"></div>
+  <div id="wrapper">
+    <div type="text" id="console_log"></div>
+  </div>
 
   <div id="resultDevices"></div>
 
