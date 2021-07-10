@@ -49,6 +49,9 @@ const parseDevice = async () => {
         let device;
         // Prompt user to select a Hid device on a dialog.
         // Must be handling a user gesture. Otherwise, generate an error by WebHID
+        var f = [];
+        f = isFiltered.checked? filters : {filters:[]};
+        
         if (isFiltered.checked) {
             [device] = await navigator.hid.requestDevice({ filters });
         } else {
