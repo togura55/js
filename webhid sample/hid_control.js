@@ -16,6 +16,7 @@ let filters = [
     }
 ];
 
+
 const connectedDevices = new Map();
 
 navigator.hid.addEventListener("connect", event => {
@@ -37,7 +38,7 @@ const setFilters = function (arr) {
     filters = [];  // Once clear the pre-defined device list
     arr.forEach(function (el) {
         console.log(el);
-        filters.push({venderID: el[0], productID: el[1]});
+        filters.push({ vendorId: el[0], productId: el[1] });
     });
 };
 
@@ -49,14 +50,8 @@ const parseDevice = async () => {
         let device;
         // Prompt user to select a Hid device on a dialog.
         // Must be handling a user gesture. Otherwise, generate an error by WebHID
-        var f = [];
-        f = isFiltered.checked? filters : {filters:[]};
-        
-        if (isFiltered.checked) {
-            [device] = await navigator.hid.requestDevice({ filters });
-        } else {
-            [device] = await navigator.hid.requestDevice({ filters: [] });
-        }
+         if (!isFiltered.checked) filters = [];
+        [device] = await navigator.hid.requestDevice({ filters });
 
         if (!device) {
             console.log(`No selected HID devices are found.`);
