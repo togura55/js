@@ -4,7 +4,6 @@
 
 let isFiltered = document.getElementById('isFilterdCheckbox');
 
-
 let filters = [
     {
         vendorId: 0x056a, // Wacom Co., Ltd
@@ -30,10 +29,16 @@ navigator.hid.addEventListener("disconnect", event => {
 });
 
 //
-// setFilters
+// Set device IDs to filters object
 //
-const setFilters = function (obj) {
-    filters = obj;
+//  @arr - 2-D array stored pair of HID venderID and venderID
+//
+const setFilters = function (arr) {
+    filters = [];  // Once clear the pre-defined device list
+    arr.forEach(function (el) {
+        console.log(el);
+        filters.push({venderID: el[0], productID: el[1]});
+    });
 };
 
 //

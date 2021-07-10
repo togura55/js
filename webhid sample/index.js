@@ -2,6 +2,7 @@
 //
 //  index HTML supported procedures
 //
+
 import { setFilters, parseDevice } from './hid_control.js';
 
 const checkButton = document.querySelector(`#check-button`);
@@ -29,7 +30,7 @@ if ("hid" in navigator) {
 
 
 //
-// Read file operation
+// Read the device-list-file operation
 //
 let fileInput = document.getElementById('openFile');
 let fileReader = new FileReader();
@@ -38,23 +39,21 @@ fileInput.onchange = () => {
     fileReader.readAsText(file);
 };
 
-// fileReader.onload = () => console.log(fileReader.result);
-fileReader.onload = function(){
-    // console.log(fileReader.result);
+fileReader.onload = function () {
     setFilters(convertCSVtoArray(fileReader.result));
 };
 
-// 読み込んだCSVデータを二次元配列に変換する関数convertCSVtoArray()の定義
-function convertCSVtoArray(str){ // 読み込んだCSVデータが文字列として渡される
-    var result = []; // 最終的な二次元配列を入れるための配列
-    var tmp = str.split("\n"); // 改行を区切り文字として行を要素とした配列を生成
- 
-    // 各行ごとにカンマで区切った文字列を要素とした二次元配列を生成
-    for(var i=0;i<tmp.length;++i){
-        tmp[i] = tmp[i].replace("\r","");
-        result[i] = Number(tmp[i].split(','));
+// Convert the read CSV data to a two-dimensional array
+function convertCSVtoArray(str) { 
+    var result = []; // An array to hold the final two-dimensional array
+    var tmp = str.split("\n"); // Generate an array with lines
+
+    // Generate two-dimentional array with "," separated
+    for (var i = 0; i < tmp.length; ++i) {
+        tmp[i] = tmp[i].replace("\r", "");
+        result[i] = tmp[i].split(',');
     }
- 
+    result = result.map(x=>x.map( str => parseInt(str, 10) ));
+    
     return result;
-}
- 
+};
