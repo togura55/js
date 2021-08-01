@@ -5,8 +5,25 @@
 
 import { setFilters, parseDevice } from './hid_control.js';
 
+// event registration Button
 const checkButton = document.querySelector(`#check-button`);
 checkButton.addEventListener(`click`, parseDevice);
+
+// Event registration Checkbox
+const filterCheckbox = document.querySelector('#isFilterdCheckbox');
+filterCheckbox.addEventListener(`change`, filterCheckboxChange);
+
+var openFileButton = document.getElementById('openFile');
+
+function filterCheckboxChange(){
+     if (this.checked == false){
+        openFileButton.setAttribute("disabled", true);
+		openFileButton.style.color = "White";
+    }else{
+        openFileButton.removeAttribute("disabled");
+		openFileButton.style.color = "black";
+    }
+};
 
 // Hook console.X to export both UI and console
 "log,warn,error.info".split(",").forEach(function (key) {
