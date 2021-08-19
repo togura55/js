@@ -16,6 +16,7 @@ let filters = [
     }
 ];
 
+let hidDevice;
 
 const connectedDevices = new Map();
 
@@ -50,7 +51,7 @@ const parseDevice = async () => {
         let device;
         // Prompt user to select a Hid device on a dialog.
         // Must be handling a user gesture. Otherwise, generate an error by WebHID
-         if (!isFiltered.checked) filters = [];
+        if (!isFiltered.checked) filters = [];
         [device] = await navigator.hid.requestDevice({ filters });
 
         if (!device) {
@@ -93,10 +94,32 @@ const parseDevice = async () => {
 };
 
 //
+// Feature Report Status [GET]
+//
+const getStatus = async () => {
+    try {
+        await hidDevice.getStatus();
+    } catch (error) {
+        console.error(error.name, error.message);
+    }
+};
+
+//
+// Feature Report Information [GET]
+//
+const getInformation = async () => {
+    try {
+        await hidDevice.getInformation();
+    } catch (error) {
+        console.error(error.name, error.message);
+    }
+};
+
+//
 // Open a device
 //
 const connectDevice = async (device) => {
-    let hidDevice;
+    //   let hidDevice;
 
     hidDevice = new StuDevice(device);
 
@@ -104,9 +127,10 @@ const connectDevice = async (device) => {
     // The HIDDevice devices are by default returned in a "closed" state 
     // and must be opened by calling open() before data can be sent or received.
     await hidDevice.open();
-    // await hidDevice.enableStandardFullMode();
-    // await hidDevice.enableIMUMode();
-    await hidDevice.close();
+
+    //   await hidDevice.close();
+
+ //   await hidDevice.getStatus();
     return hidDevice;
 };
 
@@ -156,6 +180,72 @@ class StuDeviceCore extends EventTarget {
         this.device.removeEventListener('inputreport', this._onInputReport.bind(this));
     };
 
+    //
+    // Requests Status about the device.
+    //
+    // @memberof 
+    //
+    async getStatus() {
+        const featureReportID = 0x01;    // ToDo feature report
+        const subcommand = [0x03];
+        const data = [
+            0x00,
+            0x00,
+            0x00,
+            0x00,
+            0x00,
+            0x00,
+            0x00,
+            0x00,
+            0x00,
+            ...subcommand,
+        ];
+        await this.device.sendReport(featureReportID, new Uint8Array(data));
+
+        return new Promise((resolve) => {
+            const onStatus = ({ detail: status }) => {
+                this.removeEventListener('status', onStatus);
+                delete status._raw;
+                delete status._hex;
+                resolve(status);
+            };
+            this.addEventListener('status', onStatus);
+        });
+    }
+
+    //
+    // Requests information of the device.
+    //
+    // @memberof 
+    //
+    async getInformation() {
+        const featureReportID = 0x01;
+        const subCommand = [0x08];
+        const data = [
+            0x00,
+            0x00,
+            0x00,
+            0x00,
+            0x00,
+            0x00,
+            0x00,
+            0x00,
+            0x00,
+            ...subCommand,
+        ];
+        await this.device.sendReport(featureReportID, new Uint8Array(data));
+
+        return new Promise((resolve) => {
+            const onInformation = ({ detail: information }) => {
+                this.removeEventListener('information', onInformation);
+                delete information._raw;
+                delete information._hex;
+                resolve(information);
+            };
+            this.addEventListener('information', onInformation);
+        });
+    }
+
     // 
     //  Deal with `oninputreport` events.
     //  
@@ -180,7 +270,7 @@ class StuDeviceCore extends EventTarget {
         };
 
         switch (reportId) {
-            case 0x3f: {
+            case 0x03: {
                 packet = {
                     ...packet,
                     buttonStatus: PacketParser.parseButtonStatus(data, hexData),
@@ -189,83 +279,45 @@ class StuDeviceCore extends EventTarget {
                 };
                 break;
             }
-            case 0x21:
-            case 0x30: {
+            case 0x08: {
                 packet = {
                     ...packet,
-                    timer: PacketParser.parseTimer(data, hexData),
-                    batteryLevel: PacketParser.parseBatteryLevel(data, hexData),
-                    connectionInfo: PacketParser.parseConnectionInfo(data, hexData),
-                    buttonStatus: PacketParser.parseCompleteButtonStatus(data, hexData),
-                    analogStickLeft: PacketParser.parseAnalogStickLeft(data, hexData),
-                    analogStickRight: PacketParser.parseAnalogStickRight(data, hexData),
-                    vibrator: PacketParser.parseVibrator(data, hexData),
+                    buttonStatus: PacketParser.parseButtonStatus(data, hexData),
+                    analogStick: PacketParser.parseAnalogStick(data, hexData),
+                    filter: PacketParser.parseFilter(data, hexData),
                 };
-
-                if (reportId === 0x21) {
-                    packet = {
-                        ...packet,
-                        ack: PacketParser.parseAck(data, hexData),
-                        subcommandID: PacketParser.parseSubcommandID(data, hexData),
-                        subcommandReplyData: PacketParser.parseSubcommandReplyData(
-                            data,
-                            hexData
-                        ),
-                        deviceInfo: PacketParser.parseDeviceInfo(data, hexData),
-                    };
-                }
-
-                if (reportId === 0x30) {
-                    const accelerometers = PacketParser.parseAccelerometers(
-                        data,
-                        hexData
-                    );
-                    const gyroscopes = PacketParser.parseGyroscopes(data, hexData);
-                    const rps = PacketParser.calculateActualGyroscope(
-                        gyroscopes.map((g) => g.map((v) => v.rps))
-                    );
-                    const dps = PacketParser.calculateActualGyroscope(
-                        gyroscopes.map((g) => g.map((v) => v.dps))
-                    );
-                    const acc = PacketParser.calculateActualAccelerometer(
-                        accelerometers.map((a) => [a.x.acc, a.y.acc, a.z.acc])
-                    );
-                    const quaternion = PacketParser.toQuaternion(
-                        rps,
-                        acc,
-                        device.productId
-                    );
-
-                    packet = {
-                        ...packet,
-                        accelerometers,
-                        gyroscopes,
-                        actualAccelerometer: acc,
-                        actualGyroscope: {
-                            dps: dps,
-                            rps: rps,
-                        },
-                        actualOrientation: PacketParser.toEulerAngles(
-                            rps,
-                            acc,
-                            device.productId
-                        ),
-                        actualOrientationQuaternion: PacketParser.toEulerAnglesQuaternion(
-                            quaternion
-                        ),
-                        quaternion: quaternion,
-                    };
-                }
                 break;
             }
         }
-        if (packet.deviceInfo?.type) {
-            this._receiveDeviceInfo(packet.deviceInfo);
+        if (packet.status?.type) {
+            this._receiveStatus(packet.status);
         }
-        if (packet.batteryLevel?.level) {
-            this._receiveBatteryLevel(packet.batteryLevel);
+        if (packet.information?.level) {
+            this._receiveInformation(packet.information);
         }
         this._receiveInputEvent(packet);
+    }
+
+    //
+    //
+    //
+    // @param {*} Status
+    // @memberof StuDevice
+    //
+    _receiveStatus(status) {
+        this.dispatchEvent(new CustomEvent('status', { detail: status }));
+    }
+
+    //
+    //
+    //
+    // @param {*} Information
+    // @memberof StuDevice
+    //
+    _receiveInformation(information) {
+        this.dispatchEvent(
+            new CustomEvent('information', { detail: information })
+        );
     }
 };
 
@@ -306,4 +358,4 @@ class StuDevice extends StuDeviceCore {
     }
 };
 
-export { setFilters, parseDevice, connectedDevices };
+export { setFilters, parseDevice, getStatus, getInformation, connectedDevices };

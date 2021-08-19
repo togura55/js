@@ -3,11 +3,15 @@
 //  index HTML supported procedures
 //
 
-import { setFilters, parseDevice } from './hid_control.js';
+import { setFilters, parseDevice, getStatus, getInformation } from './hid_control.js';
 
-// event registration Button
+// event registration Buttons
 const checkButton = document.querySelector(`#check-button`);
 checkButton.addEventListener(`click`, parseDevice);
+const statusButton = document.querySelector(`#status-button`);
+statusButton.addEventListener(`click`, getStatus);
+const informationButton = document.querySelector(`#information-button`);
+informationButton.addEventListener(`click`, getInformation);
 
 // Event registration Checkbox
 const filterCheckbox = document.querySelector('#isFilterdCheckbox');
