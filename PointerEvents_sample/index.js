@@ -1,3 +1,5 @@
+let penUp = 0;
+var prev_X, prev_Y;
 
 window.addEventListener('load', () => {
 
@@ -12,7 +14,7 @@ window.addEventListener('load', () => {
         console.log(tag, e.pointerId, e.offsetX, e.offsetY, e.buttons, e.pressure)
     }
 
-    function drawPointer(e) {
+    function drawPointer(e, p) {
         const x = e.offsetX
         const y = e.offsetY
         const radius = 5.0 + e.pressure * 10.0
@@ -23,7 +25,23 @@ window.addEventListener('load', () => {
         context.closePath()
         context.fill()
         if (e.buttons != 0 || e.pressure > 0.0) {
-            context.fillStyle = `rgba(${red}, 0, 255, 1.0)`
+            var color = `rgba(${red}, 0, 255, 1.0)`;
+            context.fillStyle = color;
+
+            // If a pen is down, draw line
+            if (penUp == 0 && p == 0){
+              // Reset the current path
+              context.beginPath(); 
+
+              context.lineWidth = radius * 2;
+              context.strokeStyle = color;
+              context.moveTo(x, y);
+              context.lineTo(prev_X,prev_Y);
+              // Make the line visible
+              context.stroke();
+            }
+            prev_X = x;
+            prev_Y = y;
         }
         // in case of drawing the Pen Hover
         else if (e.buttons == 0 && e.pressure == 0.0) {
@@ -33,18 +51,21 @@ window.addEventListener('load', () => {
 
     mainCanvas.addEventListener('pointerdown', (e) => {
         log('pointerdown', e)
-        drawPointer(e)
+        drawPointer(e, 1)
+        penUp = 0;
         e.preventDefault()
     })
 
     mainCanvas.addEventListener('pointermove', (e) => {
         log('pointermove', e)
-        drawPointer(e)
+        drawPointer(e, 0)
+        penUp = 0;
         e.preventDefault()
     })
 
     mainCanvas.addEventListener('pointerup', (e) => {
         log('pointerup', e)
+        penUp = 1;
         e.preventDefault()
     })
 })

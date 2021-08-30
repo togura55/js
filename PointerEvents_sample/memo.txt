@@ -1,4 +1,0 @@
----- Tracking pen hoverring --------
-Event: pointermove
-e.buttons=0
-e.pressure=0
