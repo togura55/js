@@ -20,15 +20,22 @@ let hidDevice;
 
 const connectedDevices = new Map();
 
-navigator.hid.addEventListener("connect", event => {
-    // Automatically open event.device or warn user a device is available.
-    console.log(`A device was connected.`);
-});
+if ("hid" in navigator) {
+    // The WebHID API is supported.
+    navigator.hid.addEventListener("connect", event => {
+        // Automatically open event.device or warn user a device is available.
+        console.log(`A device was connected.`);
+    });
+    
+    navigator.hid.addEventListener("disconnect", event => {
+        // Remove |event.device| from the UI.
+        console.log(`A device was disconnected.`);
+    });
+}else{
+    console.log(`This browse does not support WebHid API.`);
+}
 
-navigator.hid.addEventListener("disconnect", event => {
-    // Remove |event.device| from the UI.
-    console.log(`A device was disconnected.`);
-});
+
 
 //
 // Set device IDs to filters object
