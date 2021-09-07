@@ -4,6 +4,18 @@ var c_x = [];
 var c_y = [];
 let opinion;
 
+function save() {
+    console.log("save");
+};
+
+function load() {
+    console.log("load");
+};
+
+function clear(){
+    console.log("clear");
+};
+
 window.addEventListener('DOMContentLoaded', init, false);
 
 function init() {

@@ -1,16 +1,7 @@
-.container {
-    position: relative;
-}
-
-#canvasMain {
-    background-color: white;
-    border: solid;
-}
-
-/* * {
+* {
     margin: 0;
     padding: 0;
-} */
+}
 
 header {
     width: 100%;
@@ -19,6 +10,10 @@ header {
     text-align: center;
     background-color: lightgray;
 }
+
+/* header .headline {
+    font-size: 32px;
+} */
 
 .nav-list {
     text-align: left;
