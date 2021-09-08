@@ -3,17 +3,43 @@ var division_number = 50;
 var c_x = [];
 var c_y = [];
 let opinion;
+var output = ['あいうえお'];
+var output_filename = '作ったファイル.txt';
 
-function save() {
+const save = function () {
     console.log("save");
+
+    output = [];
+    c_x.forEach((value, index, c_x) => {
+        console.log(`${value}は、[${c_x}]の中で ${index} 番目の要素です`);
+        output.push(`${value}` + ',' + c_y[index] + '\n');
+    });
+
+    let blob = new Blob(output, { type: "text/plan" });
+    let link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = output_filename;
+    link.click();
 };
 
-function load() {
+const load = function () {
     console.log("load");
+    // 1.
+    let lines = data.split(/\r?\n/);
+
+    // 2.
+    let rslt = lines.map(line => line.split(" "));
+
+    console.log(rslt);
+
 };
 
-function clear(){
+const clear = function () {
     console.log("clear");
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    c_x = [];
+    c_y = [];
 };
 
 window.addEventListener('DOMContentLoaded', init, false);
@@ -90,10 +116,10 @@ function catmulrom_splinecurve(xi, yi) {
         var p0_y = 0 * y[i - 1] + 2 * y[i] + 0 * y[i + 1] + 0 * y[i + 2];
         var p1_x = -1 * x[i - 1] + 0 * x[i] + 1 * x[i + 1] + 0 * x[i + 2];
         var p1_y = -1 * y[i - 1] + 0 * y[i] + 1 * y[i + 1] + 0 * y[i + 2];
-        var p2_x = 2 * x[i - 1]- 5 * x[i] + 4 * x[i + 1] - 1 * x[i + 2];
-        var p2_y = 2 * y[i - 1]- 5 * y[i] + 4 * y[i + 1] - 1 * y[i + 2];
-        var p3_x = -1 * x[i - 1] + 3 * x[i]- 3 * x[i + 1] + 1 * x[i + 2];
-        var p3_y = -1 * y[i - 1] + 3 * y[i]- 3 * y[i + 1] + 1 * y[i + 2];
+        var p2_x = 2 * x[i - 1] - 5 * x[i] + 4 * x[i + 1] - 1 * x[i + 2];
+        var p2_y = 2 * y[i - 1] - 5 * y[i] + 4 * y[i + 1] - 1 * y[i + 2];
+        var p3_x = -1 * x[i - 1] + 3 * x[i] - 3 * x[i + 1] + 1 * x[i + 2];
+        var p3_y = -1 * y[i - 1] + 3 * y[i] - 3 * y[i + 1] + 1 * y[i + 2];
         for (var j = 0; j <= division_number; j++) {
             var t = j / division_number;
             qx.push((p0_x + p1_x * t + p2_x * Math.pow(t, 2) + p3_x * Math.pow(t, 3)) * 0.5);
@@ -103,3 +129,4 @@ function catmulrom_splinecurve(xi, yi) {
     return [qx, qy];
 }
 
+//export { save, load, clear };
