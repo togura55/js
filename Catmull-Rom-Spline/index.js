@@ -3,9 +3,12 @@ var division_number = 50;
 var c_x = [];
 var c_y = [];
 let opinion;
-var output = ['あいうえお'];
-var output_filename = '作ったファイル.txt';
+var output = [];
+var output_filename = 'output_strokes.txt';
 
+//
+// Export data to a file
+//
 const save = function () {
     console.log("save");
 
@@ -14,6 +17,10 @@ const save = function () {
         console.log(`${value}は、[${c_x}]の中で ${index} 番目の要素です`);
         output.push(`${value}` + ',' + c_y[index] + '\n');
     });
+    let indexLast = output.length - 1;
+    if (output[indexLast].slice(-1) == '\n'){
+        output[indexLast] = output[indexLast].slice(0, -1); // delete a last \n
+    }
 
     let blob = new Blob(output, { type: "text/plan" });
     let link = document.createElement('a');
@@ -22,20 +29,49 @@ const save = function () {
     link.click();
 };
 
+//
+// Read the file operation
+//
+let fileInput = document.getElementById('fileElem');
+let fileReader = new FileReader();
+fileInput.onchange = () => {
+    let file = fileInput.files[0];
+    fileReader.readAsText(file);
+};
+
+fileReader.onload = function () {
+    console.log(fileReader.result);
+    let lines = fileReader.result.split(/\r?\n/);
+    let rslt = lines.map(line => line.split(","));
+    c_x = [];
+    c_y = [];
+    rslt.forEach((value, index, rlst) => {
+        c_x.push(value[0]);
+        c_y.push(value[1]);
+
+        draw_shape();
+    });
+};
+
+
 const load = function () {
     console.log("load");
-    // 1.
-    let lines = data.split(/\r?\n/);
 
-    // 2.
-    let rslt = lines.map(line => line.split(" "));
+    // var input = document.getElementById('fileElem');
+    // input.click();
 
-    console.log(rslt);
+    // // 1.
+    // let lines = data.split(/\r?\n/);
+
+    // // 2.
+    // let rslt = lines.map(line => line.split(" "));
+
+    // console.log(rslt);
 
 };
 
-const clear = function () {
-    console.log("clear");
+const clean = function () {
+    console.log("clean");
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     c_x = [];
@@ -54,8 +90,7 @@ function init() {
         c_y.push(e.clientY - rect.top);
         draw_shape();
     }, false);
-
-}
+};
 
 function draw_shape() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -90,7 +125,7 @@ function draw_shape() {
         ctx.stroke();
         ctx.closePath();
     }
-}
+};
 
 function catmulrom_splinecurve(xi, yi) {
     var number_p = xi.length;
@@ -127,6 +162,7 @@ function catmulrom_splinecurve(xi, yi) {
         }
     }
     return [qx, qy];
-}
+};
 
-//export { save, load, clear };
+
+export { save, load, clean };

@@ -6,16 +6,26 @@
     <title>Catmull-Rom Spline Curve</title>
 
     <link rel="stylesheet" href="style.css" />
-    <script src="index.js"></script>
+    <script type="module" src="index.js"></script>
 </head>
 
 <body>
+    <script type="module">
+        import { save, load, clean } from './index.js';
+        window.save = save;
+        window.load = load;
+        window.clean = clean;
+    </script>
+
     <header>
+        <!-- <input type="file" id="fileElem" accept="image/*" style="display:none"> -->
         <ul class="nav-list">
             <li class="nav-list-item"><a href="#" onclick="save()">Save</a></li>
-            <li class="nav-list-item"><a href="#" onclick="load()">Load</a></li>
-            <li class="nav-list-item"><a href="#" onclick="clear()">Clear</a></li>
+            <!-- <li class="nav-list-item"><a href="#" onclick="load()" id="fileSelect">Load</a></li> -->
+            <li Class="nav-list-item"><input type="file" id="fileElem">Load</li>
+            <li class="nav-list-item"><a href="#" onclick="clean()">Clean</a></li>
         </ul>
+
     </header>
 
     <div class="container">

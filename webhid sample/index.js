@@ -19,13 +19,13 @@ filterCheckbox.addEventListener(`change`, filterCheckboxChange);
 
 var openFileButton = document.getElementById('openFile');
 
-function filterCheckboxChange(){
-     if (this.checked == false){
+function filterCheckboxChange() {
+    if (this.checked == false) {
         openFileButton.setAttribute("disabled", true);
-		openFileButton.style.color = "White";
-    }else{
+        openFileButton.style.color = "White";
+    } else {
         openFileButton.removeAttribute("disabled");
-		openFileButton.style.color = "black";
+        openFileButton.style.color = "black";
     }
 };
 
@@ -65,7 +65,7 @@ fileReader.onload = function () {
 };
 
 // Convert the read CSV data to a two-dimensional array
-function convertCSVtoArray(str) { 
+function convertCSVtoArray(str) {
     var result = []; // An array to hold the final two-dimensional array
     var tmp = str.split("\n"); // Generate an array with lines
 
@@ -74,7 +74,7 @@ function convertCSVtoArray(str) {
         tmp[i] = tmp[i].replace("\r", "");
         result[i] = tmp[i].split(',');
     }
-    result = result.map(x=>x.map( str => parseInt(str, 10) ));
-    
+    result = result.map(x => x.map(str => parseInt(str, 10)));
+
     return result;
 };
