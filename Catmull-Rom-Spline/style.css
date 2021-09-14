@@ -36,3 +36,15 @@ a:link{color: #444444; }
 a:visited{color: #000080; }
 a:hover{color: black; }
 a:active{color: #ff8000; }
+
+label>input {
+    display: none;  /* disable button style */
+ }
+
+label {
+    color: #444444;
+    text-decoration : underline;
+    /* background-color: #006DD9; */
+    padding: 10px;
+    /* border: double 4px #AAAAAA; */
+}
