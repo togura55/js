@@ -14,9 +14,12 @@ window.addEventListener('load', () => {
         console.log(tag, e.pointerId, e.offsetX, e.offsetY, e.buttons, e.pressure)
     }
 
+    var elData = document.getElementById("pointerData");
+
     function drawPointer(e, p) {
         const x = e.offsetX
         const y = e.offsetY
+        const z = e.pressure
         const radius = 5.0 + e.pressure * 10.0
         const red = e.pressure * 255
         context.beginPath()
@@ -24,6 +27,7 @@ window.addEventListener('load', () => {
         context.arc(x, y, radius, 0, Math.PI * 2)
         context.closePath()
         context.fill()
+         
         if (e.buttons != 0 || e.pressure > 0.0) {
             var color = `rgba(${red}, 0, 255, 1.0)`;
             context.fillStyle = color;
@@ -32,13 +36,14 @@ window.addEventListener('load', () => {
             if (penUp == 0 && p == 0){
               // Reset the current path
               context.beginPath(); 
-
               context.lineWidth = radius * 2;
               context.strokeStyle = color;
               context.moveTo(x, y);
               context.lineTo(prev_X,prev_Y);
               // Make the line visible
               context.stroke();
+              
+              elData.innerHTML = 'x=' + x + ', y=' + y + ', z=' + z;
             }
             prev_X = x;
             prev_Y = y;
