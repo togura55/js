@@ -2,6 +2,7 @@ let penUp = 0;
 var prev_X, prev_Y;
 var zArr = new Array();
 var zMax = 0, zMin = 1;
+const coefTable = [1,1,1,2,3,7,20,30,30,30];
 
 window.addEventListener('load', () => {
 
@@ -19,12 +20,14 @@ window.addEventListener('load', () => {
     var elData = document.getElementById("pointerData");
     var elZMaxMin = document.getElementById("zMaxMin");
 
+  
     function drawPointer(e, p) {
         const x = e.offsetX
         const y = e.offsetY
         const z = e.pressure
-        const radius = 5.0 + e.pressure * 10.0
-        const red = e.pressure * 255
+//        const radius = 5.0 + e.pressure * 10.0
+        const radius = coefTable[Math.floor(e.pressure * 10)];
+       const red = e.pressure * 255
         context.beginPath()
         context.moveTo((x + radius), y)
         context.arc(x, y, radius, 0, Math.PI * 2)
@@ -48,7 +51,7 @@ window.addEventListener('load', () => {
 
                 if (zMax < z) zMax = z;
                 if (zMin > z) zMin = z;
-                elData.innerHTML = 'x=' + x + ', y=' + y + ', z=' + z;
+                elData.innerHTML = 'x=' + x + ', y=' + y + ', z=' + z + ', r=' + radius;
                 elZMaxMin.innerHTML = 'zMax=' + zMax + ', zMin=' + zMin;
                 zArr.push(z);
             }
@@ -64,21 +67,21 @@ window.addEventListener('load', () => {
     }
 
     mainCanvas.addEventListener('pointerdown', (e) => {
-        log('pointerdown', e)
+//        log('pointerdown', e)
         drawPointer(e, 1)
         penUp = 0;
         e.preventDefault()
     })
 
     mainCanvas.addEventListener('pointermove', (e) => {
-        log('pointermove', e)
+//        log('pointermove', e)
         drawPointer(e, 0)
         penUp = 0;
         e.preventDefault()
     })
 
     mainCanvas.addEventListener('pointerup', (e) => {
-        log('pointerup', e)
+ //       log('pointerup', e)
         penUp = 1;
         e.preventDefault()
     })
