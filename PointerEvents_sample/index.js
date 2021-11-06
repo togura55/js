@@ -1,6 +1,7 @@
 let penUp = 0;
 var prev_X, prev_Y;
 var zArr = new Array();
+var zMax = 0, zMin = 1;
 
 window.addEventListener('load', () => {
 
@@ -16,7 +17,7 @@ window.addEventListener('load', () => {
     }
 
     var elData = document.getElementById("pointerData");
-
+    var elZMaxMin = document.getElementById("zMaxMin");
 
     function drawPointer(e, p) {
         const x = e.offsetX
@@ -45,7 +46,10 @@ window.addEventListener('load', () => {
                 // Make the line visible
                 context.stroke();
 
+                if (zMax < z) zMax = z;
+                if (zMin > z) zMin = z;
                 elData.innerHTML = 'x=' + x + ', y=' + y + ', z=' + z;
+                elZMaxMin.innerHTML = 'zMax=' + zMax + ', zMin=' + zMin;
                 zArr.push(z);
             }
             prev_X = x;
