@@ -12,6 +12,13 @@ let config = {
 						min: 0.5,
 						max: 1.6
 
+						// 
+						// For the Z-pressure reflection drawing
+						//
+						// ,
+						// minDef: 0.5,
+						// maxDef: 1.6
+
 						// remap: v => ValueTransformer.sigmoid(v, 0.62)
 					},
 
@@ -22,38 +29,38 @@ let config = {
 						remap: v => ValueTransformer.reverse(v)
 					}
 				}
-/*
-				rotation: {
-					dependencies: [SensorChannel.Type.ROTATION, SensorChannel.Type.AZIMUTH]
-				},
-
-				scaleX: {
-					dependencies: [SensorChannel.Type.RADIUS_X, SensorChannel.Type.ALTITUDE],
-
-					value: {
-						min: 1,
-						max: 3
-					}
-				},
-
-				scaleY: {
-					dependencies: [SensorChannel.Type.RADIUS_Y],
-
-					value: {
-						min: 1,
-						max: 3
-					}
-				},
-
-				offsetX: {
-					dependencies: [SensorChannel.Type.ALTITUDE],
-
-					value: {
-						min: 2,
-						max: 5
-					}
-				}
-*/
+				/*
+								rotation: {
+									dependencies: [SensorChannel.Type.ROTATION, SensorChannel.Type.AZIMUTH]
+								},
+				
+								scaleX: {
+									dependencies: [SensorChannel.Type.RADIUS_X, SensorChannel.Type.ALTITUDE],
+				
+									value: {
+										min: 1,
+										max: 3
+									}
+								},
+				
+								scaleY: {
+									dependencies: [SensorChannel.Type.RADIUS_Y],
+				
+									value: {
+										min: 1,
+										max: 3
+									}
+								},
+				
+								offsetX: {
+									dependencies: [SensorChannel.Type.ALTITUDE],
+				
+									value: {
+										min: 2,
+										max: 5
+									}
+								}
+				*/
 			}
 		},
 
@@ -75,38 +82,38 @@ let config = {
 						remap: v => ValueTransformer.reverse(v)
 					}
 				}
-/*
-				rotation: {
-					dependencies: [SensorChannel.Type.ROTATION, SensorChannel.Type.AZIMUTH]
-				},
-
-				scaleX: {
-					dependencies: [SensorChannel.Type.RADIUS_X, SensorChannel.Type.ALTITUDE],
-
-					value: {
-						min: 1,
-						max: 3
-					}
-				},
-
-				scaleY: {
-					dependencies: [SensorChannel.Type.RADIUS_Y],
-
-					value: {
-						min: 1,
-						max: 3
-					}
-				},
-
-				offsetX: {
-					dependencies: [SensorChannel.Type.ALTITUDE],
-
-					value: {
-						min: 2,
-						max: 5
-					}
-				}
-*/
+				/*
+								rotation: {
+									dependencies: [SensorChannel.Type.ROTATION, SensorChannel.Type.AZIMUTH]
+								},
+				
+								scaleX: {
+									dependencies: [SensorChannel.Type.RADIUS_X, SensorChannel.Type.ALTITUDE],
+				
+									value: {
+										min: 1,
+										max: 3
+									}
+								},
+				
+								scaleY: {
+									dependencies: [SensorChannel.Type.RADIUS_Y],
+				
+									value: {
+										min: 1,
+										max: 3
+									}
+								},
+				
+								offsetX: {
+									dependencies: [SensorChannel.Type.ALTITUDE],
+				
+									value: {
+										min: 2,
+										max: 5
+									}
+								}
+				*/
 			}
 		},
 
@@ -615,7 +622,7 @@ let config = {
 		},
 
 		// added for the touch enable/disable tool icon
-		touch:{
+		touch: {
 
 		}
 	},
@@ -638,10 +645,10 @@ let config = {
 
 		if (isNaN(size)) {
 			size = this.tools[toolID].dynamics.size.value;
-			size = {min: size.min, max: size.max};
+			size = { min: size.min, max: size.max };
 		}
 		else
-			size = {min: size, max: size};
+			size = { min: size, max: size };
 
 		return size;
 	},
@@ -658,7 +665,7 @@ let config = {
 				blendMode: toolConfig.blendMode || BlendMode.SOURCE_OVER
 			},
 
-			inkBulder: Object.assign({brush: toolConfig.brush}, {
+			inkBulder: Object.assign({ brush: toolConfig.brush }, {
 				layout: context.layout,
 				pathPointCalculator: context.calculate.bind(context),
 				pathPointProps: context.statics

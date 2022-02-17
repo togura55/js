@@ -1,3 +1,5 @@
+// let coefTable = [1,1,1,2,3,7,20,30,30,30];
+
 class InkCanvas extends InkController {
 	constructor() {
 		super();
@@ -99,6 +101,8 @@ class InkCanvas extends InkController {
 		this.builder.build();
 	}
 
+
+
 	move(sensorPoint) {
 		if (this.forward) return this.inkCanvasRaster.move(sensorPoint);
 
@@ -106,6 +110,17 @@ class InkCanvas extends InkController {
 			this.builder.ignore(sensorPoint);
 			return;
 		}
+
+		// 
+		// For the Z-pressure reflection drawing
+		//
+		// if (sensorPoint.pressure > 0){
+		// 	let coef = coefTable[Math.floor(sensorPoint.pressure * 10)];
+		// 	let v = config.tools.pen.dynamics.size.value;
+		// 	v.max = v.maxDef * coef;
+		// 	v.min = v.minDef * coef;
+		// 	console.log("z=" + sensorPoint.pressure + ", coef=" + coef + ", max/min=" + v.max + "/" + v.min);
+		// }
 
 		this.builder.add(sensorPoint);
 
