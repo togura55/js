@@ -10,8 +10,17 @@
 </head>
 
 <body>
-    <input type="radio" name="imageFormat" value="png" checked="checked">png
-    <input type="radio" name="imageFormat" value="jpeg">jpeg
+    <div>
+        <form name="formRadioButton" action="">
+            <input id="radioButtonPng" type="radio" value="png" onchange="onRadioButtonChange();" checked="checked">png
+            <input id="radioButtonJpg" type="radio" value="jpeg" onchange="onRadioButtonChange();">jpeg
+        </form>
+    </div>
+    <br />
+    <div>
+        <button type="button" name="confim" onclick="onClickConfirm();">確認</button>
+    </div>
+
 </body>
 
 </html>
