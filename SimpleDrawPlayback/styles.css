@@ -1,0 +1,55 @@
+.container {
+    position: relative;
+}
+.footer{
+    text-align: right;
+}
+.pointer-transparent {
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    padding: 10px;
+    background-color: rgba(255, 0, 0, 0.2);
+    pointer-events: none;
+}
+
+.pointer-target {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    padding: 10px;
+    background-color: rgba(0, 0, 255, 0.2);
+    pointer-events: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#mainCanvas {
+    border: solid;
+    touch-action: none;
+}
+
+#buttonExport, #buttonImport, #buttonReset, #buttonPlayback {
+    position: absolute;
+    opacity: 0;
+    width: 10px;
+  }
+  .customBtn {
+    display: inline-block;
+    padding: 0.5px 10px;
+    background: #f5f7f7;
+    color: #000;
+    border: 1px solid #000;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 80%;
+  }
+  .customBtn:hover,
+  .customBtn:focus {
+    filter: brightness(1.2);
+  }
+  .gray-out {
+    opacity: 0.5;
+    filter: grayscale(100%);
+  }

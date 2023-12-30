@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Pointer Drawing Sample</title>
+
+    <link rel="stylesheet" href="styles.css" />
+    <script type="text/javascript", src="app.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <canvas id="mainCanvas"></canvas>
+    </div>
+
+    <div id="pointerData">x= , y= , z= </div>
+    <div id="zMaxMin">zMax= , zMin=</div>
+    <div>
+        <label class="customBtn" tabindex="0">
+            <input type="button" name="exportFile" id="buttonExport">Export
+        </label>
+        <label class="customBtn" tabindex="1">
+            <input type="file" name="openFile" id="buttonImport" 
+            accept=".txt" multiple>Import
+        </label>
+        <label class="customBtn" tabindex="2">
+            <input type="button" name="reset" id="buttonReset">Reset
+        </label>
+        <label class="customBtn" tabindex="3">
+            <input type="button" name="playback" id="buttonPlayback">Playback
+        </label>
+    </div>
+
+    <div class="footer">
+        <p id="version"></p>
+    </div>
+</body>
+
+</html>
