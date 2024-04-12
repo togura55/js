@@ -102,6 +102,9 @@ class InkObject {
                 context.strokeStyle = this.color;
                 context.moveTo(x, y);
                 context.lineTo(this.#prev.x, this.#prev.y);
+                
+                console.log("(" + x + ":"+ y + ")-(" + this.#prev.x + ":" + this.#prev.y);
+
                 // Make the line visible
                 context.stroke();
 
