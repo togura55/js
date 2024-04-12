@@ -5,28 +5,47 @@
     <title>HTML Controls</title>
 
     <link rel="stylesheet" href="style.css" />
-    <script type="module" , src="index.js"></script>
+    <script type="text/javascript" , src="index.js"></script>
   </head>
 
   <body>
+    <!-- Text Link -->
     <div>
-      <input
-        id="radioButtonPng"
-        type="radio"
-        name="radioButtonImage"
-        value="png"
-        checked="checked"
-      />png
-      <input
-        id="radioButtonJpg"
-        type="radio"
-        name="radioButtonImage"
-        value="jpeg"
-      />jpeg
+      <a href="https://www.yahoo.co.jp">yahoo</a>
     </div>
     <br />
+    <!-- Dropdown Menu -->
+    <div>
+      <select id="dropdownList">
+        <option value="value1">リスト１</option>
+        <option value="value2">リスト２</option>
+        <option value="value3">リスト３</option>
+      </select>
+    </div>
+    <br />
+    <!-- Radio Button -->
+    <div>
+      <input id="radioButtonPng" type="radio" name="radioButtonImage" value="png" checked="checked"/>png
+      <input id="radioButtonJpg" type="radio" name="radioButtonImage" value="jpeg"/>jpeg
+    </div>
+    <br />
+    <!-- Check Box -->
+    <div>
+      <input type="checkbox" id="checkboxEnabled" name="myfunction" value="enabled" />
+      <label for="checkboxEnabled">有効</label>
+    </div>
+    <br />
+    <!-- Push Button -->
     <div>
       <button id="buttonConfirm" type="button" name="confim">確認</button>
     </div>
+    <br />
+    <!-- Canvas -->
+    <div>
+      <canvas id="canvasMain" width="300" height="100">
+
+      </canvas>
+    </div>
+    <br />
   </body>
 </html>
